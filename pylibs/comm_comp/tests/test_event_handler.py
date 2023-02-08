@@ -17,6 +17,14 @@
 #
 
 import unittest
+import sys
+import os
+
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+# append the path of the parent directory
+sys.path.append(parent)
+
 import event_handler
 
 

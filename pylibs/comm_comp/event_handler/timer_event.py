@@ -40,11 +40,8 @@ class TimerEvent(EventHandler, RepeatedTimer):
 
 if __name__ == "__main__":
     import sys
-    import pathlib
     import os
  
-# getting the name of the directory
-# where the this file is present.
     current = os.path.dirname(os.path.realpath(__file__))
     parent = os.path.dirname(current)
     # append the path of the parent directory
