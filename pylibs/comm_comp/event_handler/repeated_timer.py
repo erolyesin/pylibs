@@ -25,7 +25,7 @@ __author__ = "Six: https://stackoverflow.com/users/4117209/six"
 
 import time
 from threading import Event, Thread
-from .event_handler import EventHandler
+from event_handler import EventHandler
 
 
 class RepeatedTimer(Thread):
@@ -36,20 +36,23 @@ class RepeatedTimer(Thread):
         assert "target" in kwargs, "target key not defined"
         assert "src" in kwargs, "src key not defined"
         self.__thread_event = Event()
-        self.kwargs = kwargs
         self.join_timeout = 2
+        self.kwargs = kwargs
         self.__dict__.update(kwargs)
         self.__eventer = EventHandler(src=self.src)
 
+        if "dest" not in self.kwargs:
+            self.kwargs["dest"] = "Ether"
+        del self.kwargs["target"]
         if "start_tm" not in kwargs:
             self.start_tm = time.time()
-        super(RepeatedTimer, self).__init__(name=self.src, target=self._target)
+        super().__init__(name=self.src, target=self._target)
         self.__continue = True
         self.start()
 
     def _target(self):
         while not self.__thread_event.wait(self._time) and self.__continue:
-            self.target(**self.kwargs)
+            self.target(self.kwargs)
 
     @property
     def _time(self):

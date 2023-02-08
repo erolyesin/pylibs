@@ -21,7 +21,7 @@ __author__ = "Erol Yesin"
 from typing import Any
 
 
-class EventHandler(object):
+class EventHandler:
     def __init__(self, **kwargs):
         self.packet = kwargs
         assert "src" in self.packet, "src key not defined"
@@ -31,7 +31,7 @@ class EventHandler(object):
             self.packet["payload"] = None
         if "cookie" not in self.packet:
             self.packet["cookie"] = None
-        # super(EventHandler, self).__init__(**self.packet)
+        ## super().__init__(**kwargs)
         self.cb_routines = {}
 
     def subscribe(self, name: str, on_event: callable, cookie: Any = None):

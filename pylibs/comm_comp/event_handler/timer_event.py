@@ -34,10 +34,22 @@ class TimerEvent(EventHandler, RepeatedTimer):
         if "target" not in kwargs:
             kwargs["target"] = "self"
 
-        super(TimerEvent, self).__init__(**kwargs)
+        EventHandler.__init__(self, **kwargs)
+        RepeatedTimer.__init__(self, **kwargs)
 
 
 if __name__ == "__main__":
+    import sys
+    import pathlib
+    import os
+ 
+# getting the name of the directory
+# where the this file is present.
+    current = os.path.dirname(os.path.realpath(__file__))
+    parent = os.path.dirname(current)
+    # append the path of the parent directory
+    sys.path.append(parent)
+
     import time
     from log_wrapper.log_wrapper import LoggerWrapper
 
